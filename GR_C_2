@@ -1,0 +1,145 @@
+suhas@suhas:~$ su
+Password: 
+root@suhas:/home/suhas# mongo
+MongoDB shell version: 2.6.10
+connecting to: test
+> db.teacher.find()
+> db.createCollection("teacher")
+{ "ok" : 1 }
+> db.teacher.insert({teacherid:"t01",teachername:"Ravi",branch:"IT","salary":20000,"status":"A"})
+WriteResult({ "nInserted" : 1 })
+> db.teacher.insert({teacherid : "t02",teachername:"anju",branch:"COMP","salary":10000,"status" : "A"})
+WriteResult({ "nInserted" : 1 })
+> db.teacher.insert({teacherid : "t03",teachername:"anil",branch:"IT","salary":1000,"status" : "NA"})
+WriteResult({ "nInserted" : 1 })
+> db.teacher.insert({teacherid : "t04",teachername:"ravi",branch:"IT","salary":10000,"status" : "NA"})
+WriteResult({ "nInserted" : 1 })
+> db.teacher.insert({teacherid : "t05",teachername:"raman",branch:"COMP","salary":50000,"status" : "A"})
+WriteResult({ "nInserted" : 1 })
+1:DISPLAY A COLLECTION (TABLE)
+> db.teacher.find()
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 20000, "status" : "A" }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000, "status" : "NA" }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000, "status" : "NA" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "COMP", "salary" : 50000, "status" : "A" }
+2:FIND THE DETAILS OF TEACHER HAVING 10000 SALARY
+> db.teacher.find({salary:10000})
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000, "status" : "NA" }
+3:FIND THE DETAILS OF TEACHER HAVING ID T02
+> db.teacher.find({teacherid:'t02'})
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+4:FIND THE TEACHER WITH STATUS A AND SALARY 50000
+> db.teacher.find({status:'A',salary:50000})
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "COMP", "salary" : 50000, "status" : "A" }
+5:FIND THE TEACHER WITH STATUS A OR SALARY 50000
+> db.teacher.find({$or:[{status:'A'},salary:50000}]})
+2019-09-23T19:32:17.642+0530 SyntaxError: Unexpected token :
+> db.teacher.find({$or:[{status:'A'},{salary:50000}]})
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 20000, "status" : "A" }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "COMP", "salary" : 50000, "status" : "A" }
+6:FIND THE TEACHER SALARY > 20000
+> db.teacher.find({salary:{$gt:20000}})
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "COMP", "salary" : 50000, "status" : "A" }
+7:FIND THE TEACHER SALARY < 20000
+> db.teacher.find({salary:{$lt:20000}})
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000, "status" : "NA" }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000, "status" : "NA" }
+8:FIND THE TEACHERS WITH STATUS A WITH SALARY ASCENDING
+> db.teacher.find({status:'A'}).sort({salary:1})
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 20000, "status" : "A" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "COMP", "salary" : 50000, "status" : "A" }
+9:COUNT THE TOTAL NUMBER OF TEACHERS
+> db.teacher.find().count()
+5
+10:DISPLAY THE DEPARTMENT NAMES
+> db.teacher.distinct("branch")
+[ "IT", "COMP" ]
+11. UPDATE THE DEPARTMENT OF TEACHERS TO ENTC WHERE SALARY GREATER THAN 20000
+> db.teacher.update({salary:{$gt:20000}},{$set:{branch:'ENTC'}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.teacher.find()
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 20000, "status" : "A" }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 10000, "status" : "A" }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000, "status" : "NA" }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000, "status" : "NA" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "ENTC", "salary" : 50000, "status" : "A" }
+12:INCREMENT THE SALARY OF TEACHERS WITH 10000 WHOSE STATUS IS "A"
+> db.teacher.update({status:'A'},{$inc:{salary:10000}},{multi:true})
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+> db.teacher.find().pretty()
+{
+	"_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"),
+	"teacherid" : "t01",
+	"teachername" : "Ravi",
+	"branch" : "IT",
+	"salary" : 30000,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5d88cecc34a3cdf7ffffe688"),
+	"teacherid" : "t02",
+	"teachername" : "anju",
+	"branch" : "COMP",
+	"salary" : 20000,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5d88ceff34a3cdf7ffffe689"),
+	"teacherid" : "t03",
+	"teachername" : "anil",
+	"branch" : "IT",
+	"salary" : 1000,
+	"status" : "NA"
+}
+{
+	"_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"),
+	"teacherid" : "t04",
+	"teachername" : "ravi",
+	"branch" : "IT",
+	"salary" : 10000,
+	"status" : "NA"
+}
+{
+	"_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"),
+	"teacherid" : "t05",
+	"teachername" : "raman",
+	"branch" : "ENTC",
+	"salary" : 60000,
+	"status" : "A"
+}
+13:TO DELETE A FIELD (COLUMN) IN A COLLECTION (TABLE)
+> db.teacher.update({},{$unset:{status:1}},{multi:true})
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
+> db.teacher.find()
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 30000 }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 20000 }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000 }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000 }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "ENTC", "salary" : 60000 }
+14:ADD A FIELD CALLED JOINING DATE IN TEACHER_INFO COLLECTION
+> db.teacher.update({},{$set:{joining_date:'28 sept 2017'}},{multi:true})
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
+> db.teacher.find()
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 30000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 20000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88cf2734a3cdf7ffffe68a"), "teacherid" : "t04", "teachername" : "ravi", "branch" : "IT", "salary" : 10000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "ENTC", "salary" : 60000, "joining_date" : "28 sept 2017" }
+15:DELETE TEACHER WITH ID T04
+> db.teacher.remove({teacherid:"t04"})
+WriteResult({ "nRemoved" : 1 })
+> db.teacher.find()
+{ "_id" : ObjectId("5d88ce8c34a3cdf7ffffe687"), "teacherid" : "t01", "teachername" : "Ravi", "branch" : "IT", "salary" : 30000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88cecc34a3cdf7ffffe688"), "teacherid" : "t02", "teachername" : "anju", "branch" : "COMP", "salary" : 20000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88ceff34a3cdf7ffffe689"), "teacherid" : "t03", "teachername" : "anil", "branch" : "IT", "salary" : 1000, "joining_date" : "28 sept 2017" }
+{ "_id" : ObjectId("5d88cf5334a3cdf7ffffe68b"), "teacherid" : "t05", "teachername" : "raman", "branch" : "ENTC", "salary" : 60000, "joining_date" : "28 sept 2017" }
+16:DELETE COLLECTION TEACHER_INFO
+> db.teacher.drop()
+true
+> 
+
