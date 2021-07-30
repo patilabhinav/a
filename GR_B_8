@@ -1,0 +1,398 @@
+A)CREATE VIEW V1 WHICH WILL CONTAIN PRNNO, STUDENT NAME & ROLLNO PERFORM INSERT, UPDATE & DELETE OPERATION ON VIEW.
+mysql> create table student(PRNNO in primary key, Sname varchar(25), rollno int, branch varchar(25), year varchar(25), mobileNo long);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in primary key, Sname varchar(25), rollno int, branch varchar(25), year varchar(' at line 1
+mysql> create table student(PRNNO int primary key, Sname varchar(25), rollno int, branch varchar(25), year varchar(25), mobileNo long);
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PRNNO    | int(11)     | NO   | PRI | NULL    |       |
+| SName    | varchar(25) | YES  |     | NULL    |       |
+| rollno   | int(11)     | YES  |     | NULL    |       |
+| branch   | varchar(20) | YES  |     | NULL    |       |
+| year     | int(11)     | YES  |     | NULL    |       |
+| mobileNo | mediumtext  | YES  | UNI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE VIEW stud as (select PRNNO, Sname, rollno from student);
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> insert into student value(10021,'Jon',19,'Civil','3rd',8763845202);
+ERROR 1265 (01000): Data truncated for column 'year' at row 1
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   125 | Zack    |     26 | Mech   |    4 | 8836754624 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   128 | Zack    |     56 | IT     |    3 | 2222222222 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   888 | Zack    |     56 | IT     |    3 | 9999999999 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
++-------+---------+--------+--------+------+------------+
+22 rows in set (0.00 sec)
+
+mysql> insert into student value(10021,'Jon',19,'Civil','3',8763845202);
+Query OK, 1 row affected (0.49 sec)
+
+mysql> insert into student value(10030,'Dany',26,'Comp','2',7825364129);
+Query OK, 1 row affected (0.47 sec)
+
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   125 | Zack    |     26 | Mech   |    4 | 8836754624 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   128 | Zack    |     56 | IT     |    3 | 2222222222 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   888 | Zack    |     56 | IT     |    3 | 9999999999 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
+| 10021 | Jon     |     19 | Civil  |    3 | 8763845202 |
+| 10030 | Dany    |     26 | Comp   |    2 | 7825364129 |
++-------+---------+--------+--------+------+------------+
+24 rows in set (0.00 sec)
+
+mysql> insert into stud values(10044,'Emilia',32);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into stud values(10032,'Zack',12);
+Query OK, 1 row affected (0.43 sec)
+
+mysql> select * from stud;
++-------+---------+--------+
+| PRNNO | Sname   | rollno |
++-------+---------+--------+
+|   122 | Clay    |     34 |
+|   123 | Sam     |     11 |
+|   124 | Robert  |     15 |
+|   125 | Zack    |     26 |
+|   126 | Clay    |     34 |
+|   127 | William |     56 |
+|   128 | Zack    |     56 |
+|   129 | Jon     |     19 |
+|   149 | Cade    |     14 |
+|   153 | Dace    |     26 |
+|   156 | Dace    |     26 |
+|   303 | Sam     |     11 |
+|   350 | Sam     |     11 |
+|   420 | Sam     |     11 |
+|   421 | Cade    |     14 |
+|   444 | Cade    |     14 |
+|   525 | Dace    |     26 |
+|   555 | Sam     |     11 |
+|   629 | Clay    |     34 |
+|   777 | Sam     |     11 |
+|   888 | Zack    |     56 |
+|   986 | Sam     |     11 |
+| 10021 | Jon     |     19 |
+| 10030 | Dany    |     26 |
+| 10032 | Zack    |     12 |
+| 10044 | Emilia  |     32 |
++-------+---------+--------+
+26 rows in set (0.00 sec)
+
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   125 | Zack    |     26 | Mech   |    4 | 8836754624 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   128 | Zack    |     56 | IT     |    3 | 2222222222 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   888 | Zack    |     56 | IT     |    3 | 9999999999 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
+| 10021 | Jon     |     19 | Civil  |    3 | 8763845202 |
+| 10030 | Dany    |     26 | Comp   |    2 | 7825364129 |
+| 10032 | Zack    |     12 | NULL   | NULL | NULL       |
+| 10044 | Emilia  |     32 | NULL   | NULL | NULL       |
++-------+---------+--------+--------+------+------------+
+26 rows in set (0.00 sec)
+
+mysql> update stud set PRNNO=10029 where Sname="Jon";
+ERROR 1062 (23000): Duplicate entry '10029' for key 'PRIMARY'
+mysql> select * from stud;
++-------+---------+--------+
+| PRNNO | Sname   | rollno |
++-------+---------+--------+
+|   122 | Clay    |     34 |
+|   123 | Sam     |     11 |
+|   124 | Robert  |     15 |
+|   125 | Zack    |     26 |
+|   126 | Clay    |     34 |
+|   127 | William |     56 |
+|   128 | Zack    |     56 |
+|   129 | Jon     |     19 |
+|   149 | Cade    |     14 |
+|   153 | Dace    |     26 |
+|   156 | Dace    |     26 |
+|   303 | Sam     |     11 |
+|   350 | Sam     |     11 |
+|   420 | Sam     |     11 |
+|   421 | Cade    |     14 |
+|   444 | Cade    |     14 |
+|   525 | Dace    |     26 |
+|   555 | Sam     |     11 |
+|   629 | Clay    |     34 |
+|   777 | Sam     |     11 |
+|   888 | Zack    |     56 |
+|   986 | Sam     |     11 |
+| 10021 | Jon     |     19 |
+| 10030 | Dany    |     26 |
+| 10032 | Zack    |     12 |
+| 10044 | Emilia  |     32 |
++-------+---------+--------+
+26 rows in set (0.00 sec)
+
+mysql> update stud set PRNNO=10029 where Sname="Clay";
+ERROR 1062 (23000): Duplicate entry '10029' for key 'PRIMARY'
+mysql> update stud set PRNNO=10035 where Sname="Jon";
+ERROR 1062 (23000): Duplicate entry '10035' for key 'PRIMARY'
+mysql> update stud set PRNNO=10036 where Sname="Jon";
+ERROR 1062 (23000): Duplicate entry '10036' for key 'PRIMARY'
+mysql> update stud set PRNNO=10050 where Sname="Jon";
+ERROR 1062 (23000): Duplicate entry '10050' for key 'PRIMARY'
+mysql> update stud set PRNNO=10050 where Sname="Clay";
+ERROR 1062 (23000): Duplicate entry '10050' for key 'PRIMARY'
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   125 | Zack    |     26 | Mech   |    4 | 8836754624 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   128 | Zack    |     56 | IT     |    3 | 2222222222 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   888 | Zack    |     56 | IT     |    3 | 9999999999 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
+| 10021 | Jon     |     19 | Civil  |    3 | 8763845202 |
+| 10030 | Dany    |     26 | Comp   |    2 | 7825364129 |
+| 10032 | Zack    |     12 | NULL   | NULL | NULL       |
+| 10044 | Emilia  |     32 | NULL   | NULL | NULL       |
++-------+---------+--------+--------+------+------------+
+26 rows in set (0.00 sec)
+
+mysql> update stud set PRNNO=121 where Sname="Jon";
+ERROR 1062 (23000): Duplicate entry '121' for key 'PRIMARY'
+mysql> update stud set PRNNO=629 where Sname="Dany";
+ERROR 1062 (23000): Duplicate entry '629' for key 'PRIMARY'
+mysql> update stud set PRNNO=630 where Sname="Dany";
+Query OK, 1 row affected (0.37 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from stud;
++-------+---------+--------+
+| PRNNO | Sname   | rollno |
++-------+---------+--------+
+|   122 | Clay    |     34 |
+|   123 | Sam     |     11 |
+|   124 | Robert  |     15 |
+|   125 | Zack    |     26 |
+|   126 | Clay    |     34 |
+|   127 | William |     56 |
+|   128 | Zack    |     56 |
+|   129 | Jon     |     19 |
+|   149 | Cade    |     14 |
+|   153 | Dace    |     26 |
+|   156 | Dace    |     26 |
+|   303 | Sam     |     11 |
+|   350 | Sam     |     11 |
+|   420 | Sam     |     11 |
+|   421 | Cade    |     14 |
+|   444 | Cade    |     14 |
+|   525 | Dace    |     26 |
+|   555 | Sam     |     11 |
+|   629 | Clay    |     34 |
+|   630 | Dany    |     26 |
+|   777 | Sam     |     11 |
+|   888 | Zack    |     56 |
+|   986 | Sam     |     11 |
+| 10021 | Jon     |     19 |
+| 10032 | Zack    |     12 |
+| 10044 | Emilia  |     32 |
++-------+---------+--------+
+26 rows in set (0.00 sec)
+
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   125 | Zack    |     26 | Mech   |    4 | 8836754624 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   128 | Zack    |     56 | IT     |    3 | 2222222222 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   630 | Dany    |     26 | Comp   |    2 | 7825364129 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   888 | Zack    |     56 | IT     |    3 | 9999999999 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
+| 10021 | Jon     |     19 | Civil  |    3 | 8763845202 |
+| 10032 | Zack    |     12 | NULL   | NULL | NULL       |
+| 10044 | Emilia  |     32 | NULL   | NULL | NULL       |
++-------+---------+--------+--------+------+------------+
+26 rows in set (0.00 sec)
+
+mysql> delete from stud where Sname="Zack";
+Query OK, 4 rows affected (0.37 sec)
+
+mysql> select * from stud;
++-------+---------+--------+
+| PRNNO | Sname   | rollno |
++-------+---------+--------+
+|   122 | Clay    |     34 |
+|   123 | Sam     |     11 |
+|   124 | Robert  |     15 |
+|   126 | Clay    |     34 |
+|   127 | William |     56 |
+|   129 | Jon     |     19 |
+|   149 | Cade    |     14 |
+|   153 | Dace    |     26 |
+|   156 | Dace    |     26 |
+|   303 | Sam     |     11 |
+|   350 | Sam     |     11 |
+|   420 | Sam     |     11 |
+|   421 | Cade    |     14 |
+|   444 | Cade    |     14 |
+|   525 | Dace    |     26 |
+|   555 | Sam     |     11 |
+|   629 | Clay    |     34 |
+|   630 | Dany    |     26 |
+|   777 | Sam     |     11 |
+|   986 | Sam     |     11 |
+| 10021 | Jon     |     19 |
+| 10044 | Emilia  |     32 |
++-------+---------+--------+
+22 rows in set (0.00 sec)
+
+mysql> select * from student;
++-------+---------+--------+--------+------+------------+
+| PRNNO | SName   | rollno | branch | year | mobileNo   |
++-------+---------+--------+--------+------+------------+
+|   122 | Clay    |     34 | E&TC   |    3 | 9922671831 |
+|   123 | Sam     |     11 | IT     |    3 | 9377815123 |
+|   124 | Robert  |     15 | Comp   |    2 | 8737532729 |
+|   126 | Clay    |     34 | E&TC   |    3 | 9835678232 |
+|   127 | William |     56 | IT     |    3 | 9835678532 |
+|   129 | Jon     |     19 | Civil  |    2 | 7276426811 |
+|   149 | Cade    |     14 | Comp   |    2 | 9489658943 |
+|   153 | Dace    |     26 | IT     |    2 | 9890603951 |
+|   156 | Dace    |     26 | IT     |    2 | 9999966666 |
+|   303 | Sam     |     11 | IT     |    3 | 8485861499 |
+|   350 | Sam     |     11 | IT     |    3 | 7777777777 |
+|   420 | Sam     |     11 | IT     |    3 | 9890621253 |
+|   421 | Cade    |     14 | Comp   |    2 | 5555555555 |
+|   444 | Cade    |     14 | Comp   |    2 | 8888888888 |
+|   525 | Dace    |     26 | IT     |    2 | 8888899999 |
+|   555 | Sam     |     11 | IT     |    3 | 7447828265 |
+|   629 | Clay    |     34 | E&TC   |    3 | 1234567897 |
+|   630 | Dany    |     26 | Comp   |    2 | 7825364129 |
+|   777 | Sam     |     11 | IT     |    3 | 9766231286 |
+|   986 | Sam     |     11 | IT     |    3 | 9765982552 |
+| 10021 | Jon     |     19 | Civil  |    3 | 8763845202 |
+| 10044 | Emilia  |     32 | NULL   | NULL | NULL       |
++-------+---------+--------+--------+------+------------+
+22 rows in set (0.00 sec)
+B)CREATE A VIEW V2 WHICH WILL CONTAIN ISBN NO, TITLE, AUTHOR ID, AUTHOR NAME. TRY TO INSERT FEW RECORDS IN BASE TABLE USING VIEW. FIND RESTRICTIONS ON UPDATABLE VIEWS.
+mysql> create table book(ISBNNO int primary key, title varchar(25), AID int, price int, quantity int);
+ERROR 1050 (42S01): Table 'book' already exists
+mysql> create table author(authorID int primary key, Aname varchar(25), Aemail varchar(25),gender varchar(20));
+ERROR 1050 (42S01): Table 'author' already exists
+mysql> alter table book add foreign key(AID) references author(authorID);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> CREATE VIEW v2 as (select ISBNNO, title,authorID, Aname from book, author where AID=authorID);
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> desc v2;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| ISBNNO   | int(11)     | NO   |     | NULL    |       |
+| title    | varchar(25) | YES  |     | NULL    |       |
+| authorID | int(11)     | NO   |     | NULL    |       |
+| Aname    | varchar(25) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into v2 values(20911,'FDS',1234,'Sahane');
+ERROR 1394 (HY000): Can not insert into join view 'TEITT3.v2' without fields list
+mysql> 
+
